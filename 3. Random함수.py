@@ -17,3 +17,10 @@ for i in range(0,6):
 
 #Lotto 번호 생성기 3 - list 형태 / 중복제외
 print(sample(range(1,51),5))
+
+
+# Suffle - 7강 이후 추가
+list = [1,2,3,4,5]
+print(list)
+shuffle(list)
+print(list)

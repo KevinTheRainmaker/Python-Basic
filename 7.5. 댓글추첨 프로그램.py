@@ -9,13 +9,13 @@ temp = []
 def gift():
     for i in range(4):
         present.append(randint(1,20))
-    print("\t---당첨자 발표---\n")
+    print("\n\t---당첨자 발표---\n")
     print(f"\t치킨 당첨자: {present[0]}번\n")
     for j in range(1,4):
         temp.append(present[j])
         temp.sort()
         print(f"\t커피 당첨자: {temp[j-1]}번")
     
-    print("\n\t-----------------")
+    print("\n\t-----------------\n")
 
 gift()

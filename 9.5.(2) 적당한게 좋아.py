@@ -21,6 +21,6 @@ def goodMiddle():
         else:
             print("Sorry. I don't want your task.")
 
-    return accept
+    return f"Number of Customers I accept today: {accept}"
 
 print(goodMiddle())

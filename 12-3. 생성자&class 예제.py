@@ -15,11 +15,11 @@ class Monster:
 
     def basic_attack(self):
         # health에 따라 공격력이 변동
-        # 최대 기본 공격력은 자체 공격력을 넘지 않음
+        # 최대 기본 공격력은 자체 공격력과 자체 스피드의 합산을 넘지 않음
         attack_point = self.attack * self.speed
         rage_point = attack_point // self.health
 
-        basic_attack = (attack_point + rage_point) % self.attack
+        basic_attack = (attack_point + rage_point) % (self.attack + self.speed)
         
         if basic_attack == 0:
             basic_attack = self.attack

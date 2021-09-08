@@ -35,6 +35,7 @@ class Item:
     revenue = 0
     saleWeight = 0
     discardWeight = 0
+    effectList = {}
     
     def __init__(self, name, price, weight, isDrop):
         self.name = name
@@ -44,31 +45,42 @@ class Item:
 
     def sale(self):
         print(f'{self.name}의 가격: {self.price}')
-        command = input('판매하겠습니까?\t[Y/N]: ')
+        command = input(f'{self.name} 을/를 판매하겠습니까?\t[Y/N]: ')
+        command = command.upper()
+
         if command == 'Y':
-            Item.revenue += self.price
-            Item.saleWeight += self.weight
-            print(f'{self.name} 이/가 판매되었습니다. (+{self.price}G)')
-        elif command == 'N':
-            print(f'{self.name}의 판매가 취소되었습니다.')
+            if self.name not in Item.effectList.keys():
+                Item.revenue += self.price
+                Item.saleWeight += self.weight
+                print(f'{self.name} 이/가 판매되었습니다. (+{self.price}G)')
+            elif command == 'N':
+                print(f'{self.name}의 판매가 취소되었습니다.')
+            else:
+                print('장착하고 있는 아이템은 판매할 수 없습니다.')
         else:
             print('잘못된 커맨드를 입력하셨습니다.')
-        
+
         return Item.saleWeight
 
     def discard(self):
-        if self.isDrop == True:
-            Item.discardWeight += self.weight
-            print(f'{self.name} 을/를 버렸습니다.')
-        else:
-            print('이 아이템은 버릴 수 없습니다.')
-        
+        command = input(f'{self.name} 을/를 버리겠습니까?\t[Y/N]: ')
+        command = command.upper()
+
+        if command == 'Y':
+            if self.name not in Item.effectList.keys():
+                if self.isDrop == True:
+                    Item.discardWeight += self.weight
+                    print(f'{self.name} 을/를 버렸습니다.')
+                else:
+                    print('이 아이템은 버릴 수 없습니다.')
+            else:
+                print('장착하고 있는 아이템은 버릴 수 없습니다.')
+    
         return Item.discardWeight
 
 class WearableItem(Item):
     wearWeight = 0
     maxWear = 300
-    effectList = {}
     
     def __init__(self, name, price, weight, isDrop, isWear, effect):
         super().__init__(name, price, weight, isDrop)
@@ -83,24 +95,24 @@ class WearableItem(Item):
             else:
                 WearableItem.wearWeight = after
                 print(f'{self.name} 을/를 장착했습니다. (추가 착용 가능 무게: {WearableItem.maxWear - WearableItem.wearWeight})')
-                WearableItem.effectList[self.name] = self.effect
+                Item.effectList[self.name] = self.effect
         else:
             print('이 아이템은 장비할 수 없습니다.')
         
-        return WearableItem.effectList
+        return Item.effectList
 
     def itemOff(self):
-        if self.name in WearableItem.effectList.keys():
+        if self.name in Item.effectList.keys():
             WearableItem.wearWeight -= self.weight
-            del WearableItem.effectList[self.name]
+            del Item.effectList[self.name]
             print(f'{self.name}의 장착을 해제하였습니다. (추가 착용 가능 무게: {WearableItem.maxWear - WearableItem.wearWeight})')
         else:
             print('장착하지 않은 아이템은 해제할 수 없습니다.')
 
-        return WearableItem.effectList
+        return Item.effectList
 
     def showEffect(self):
-        print(f'현재 장착한 장비의 효과: {str(WearableItem.effectList.values())}')
+        print(f'현재 장착한 장비의 효과: {Item.effectList.values()}')
     
 class UsableItem(Item):
     def __init__(self, name, price, weight, isDrop, isUsable, effect):
@@ -119,9 +131,14 @@ class UsableItem(Item):
 
 hermes = WearableItem('헤르메스의 신발', 300, 10, True, True, '속도 +30')
 hermes.wear()
+hermes.sale()
+hermes.discard()
 
 hercules = WearableItem('헤라클레스의 몽둥이', 800, 30, True, True, '힘 +100')
 print(hercules.wear())
+print(hermes.itemOff())
+hermes.sale()
+hercules.showEffect()
 
 hpPortion = UsableItem('체력포션', 10, 2, True, True, '체력 회복 +200')
 hpPortion.use()

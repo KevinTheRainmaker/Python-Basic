@@ -99,3 +99,15 @@ class WearableItem(Item):
     def showEffect(self):
         print(f'현재 장착한 장비의 효과: {str(WearableItem.effectList.values())}')
     
+class UsableItem(Item):
+    def __init__(self, name, price, weight, isDrop, isUsable, effect):
+        super().__init__(name, price, weight, isDrop)
+        self.isUsable = isUsable
+        self.effect = effect
+
+    def use(self):
+        if self.isUsable == True:
+            print(f'{self.name} 을/를 사용했습니다. ({self.effect})')
+        else:
+            print('이 아이템은 사용할 수 없습니다.')
+

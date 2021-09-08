@@ -53,10 +53,12 @@ class Item:
                 Item.revenue += self.price
                 Item.saleWeight += self.weight
                 print(f'{self.name} 이/가 판매되었습니다. (+{self.price}G)')
-            elif command == 'N':
-                print(f'{self.name}의 판매가 취소되었습니다.')
             else:
                 print('장착하고 있는 아이템은 판매할 수 없습니다.')
+
+        elif command == 'N':
+                print(f'{self.name}의 판매가 취소되었습니다.')
+        
         else:
             print('잘못된 커맨드를 입력하셨습니다.')
 
@@ -77,6 +79,11 @@ class Item:
                 print('장착하고 있는 아이템은 버릴 수 없습니다.')
     
         return Item.discardWeight
+    
+    def showItems(self):
+        print(f'현재 장착하고 있는 장비: {Item.effectList.keys()}') # 수정 필요
+        if not list(Item.effectList):
+            print('장착하고 있는 장비가 없습니다.') 
 
 class WearableItem(Item):
     wearWeight = 0
@@ -112,7 +119,7 @@ class WearableItem(Item):
         return Item.effectList
 
     def showEffect(self):
-        print(f'현재 장착한 장비의 효과: {Item.effectList.values()}')
+        print(f'{self.name}의 효과: {Item.effectList[self.name]}')
     
 class UsableItem(Item):
     def __init__(self, name, price, weight, isDrop, isUsable, effect):
@@ -133,12 +140,14 @@ hermes = WearableItem('헤르메스의 신발', 300, 10, True, True, '속도 +30
 hermes.wear()
 hermes.sale()
 hermes.discard()
+hermes.showItems()
 
 hercules = WearableItem('헤라클레스의 몽둥이', 800, 30, True, True, '힘 +100')
-print(hercules.wear())
-print(hermes.itemOff())
+hercules.wear()
+hermes.itemOff()
 hermes.sale()
 hercules.showEffect()
+hercules.showItems()
 
 hpPortion = UsableItem('체력포션', 10, 2, True, True, '체력 회복 +200')
 hpPortion.use()
@@ -146,4 +155,5 @@ hpPortion.use()
 brokenSword = Item('부러진 칼', 50, 10, False)
 brokenSword.discard()
 
-print(hercules.itemOff())
+hercules.itemOff()
+hercules.showItems()

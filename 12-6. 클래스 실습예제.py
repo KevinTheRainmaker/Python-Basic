@@ -31,7 +31,7 @@
     > use(): None
 '''
 
-class Item():
+class Item:
     revenue = 0
     saleWeight = 0
     discardWeight = 0
@@ -86,7 +86,8 @@ class WearableItem(Item):
                 WearableItem.effectList[self.name] = self.effect
         else:
             print('이 아이템은 장비할 수 없습니다.')
-            
+        
+        return WearableItem.effectList
 
     def itemOff(self):
         if self.name in WearableItem.effectList.keys():
@@ -95,6 +96,8 @@ class WearableItem(Item):
             print(f'{self.name}의 장착을 해제하였습니다. (추가 착용 가능 무게: {WearableItem.maxWear - WearableItem.wearWeight})')
         else:
             print('장착하지 않은 아이템은 해제할 수 없습니다.')
+
+        return WearableItem.effectList
 
     def showEffect(self):
         print(f'현재 장착한 장비의 효과: {str(WearableItem.effectList.values())}')
@@ -111,3 +114,19 @@ class UsableItem(Item):
         else:
             print('이 아이템은 사용할 수 없습니다.')
 
+
+# =========================================================================================== #
+
+hermes = WearableItem('헤르메스의 신발', 300, 10, True, True, '속도 +30')
+hermes.wear()
+
+hercules = WearableItem('헤라클레스의 몽둥이', 800, 30, True, True, '힘 +100')
+print(hercules.wear())
+
+hpPortion = UsableItem('체력포션', 10, 2, True, True, '체력 회복 +200')
+hpPortion.use()
+
+brokenSword = Item('부러진 칼', 50, 10, False)
+brokenSword.discard()
+
+print(hercules.itemOff())

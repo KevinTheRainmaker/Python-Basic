@@ -18,4 +18,8 @@ class Pay:
         self.time = time
     
     def get_pay_info(self):
-        return f'{self.time}\n{self.id}\n{self.price}'     
+        return f'{self.time}\n{self.id}\n{self.price}'
+
+# 해당 파일을 직접 실행했을때만 실행: 모듈로 불러와서 실행 시 실행 X
+if __name__ == '__main__':
+    print('pay 모듈 실행')

@@ -1,0 +1,10 @@
+# 패키지: 관련있는 모듈을 하나의 폴더로 구성해 놓은 것
+'''
+package/
+    unit/
+        __init__.py
+        character.py
+        item.py
+        monster.py
+    main.py
+'''

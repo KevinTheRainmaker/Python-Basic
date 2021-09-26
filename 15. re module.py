@@ -79,3 +79,25 @@ print(result2)
 
 print(result3)
 # <re.Match object; span=(0, 17), match='Boys be ambitious'>
+
+
+# 2. match object의 메서드
+result = re.search('people', str)
+print(result)
+# <re.Match object; span=(10, 16), match='people'>
+
+# 1) group()
+print(result.group())
+# people
+
+# 2) start()
+print(result.start())
+# 10
+
+# 3) end()
+print(result.end())
+# 16
+
+# 4) span()
+print(result.span())
+# (10, 16)
